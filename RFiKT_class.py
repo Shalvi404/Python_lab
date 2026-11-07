@@ -142,6 +142,44 @@ class Faculty:
         with open(filename, "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
         return filename
+
+    def report_discipline(self, code, filename=None):
+        found_discipline = None
+        dept_name = None
+        for dept in self._departments:
+            for d in dept.all_disciplines():
+                if d.code == code:
+                    found_discipline = d
+                    dept_name = dept.name
+                    break
+            if found_discipline:
+                break
+        if not found_discipline:
+            raise ValueError(f"Дисциплина с кодом {code} нету.")
+        if filename is None:
+            filename = f"discipline_{code}.txt"
+        students_data = []
+        for s in self._students.values():
+            desc = s.description()
+            if code in desc and desc[code]["grade"] is not None:
+                students_data.append((s.name, desc[code]["grade"]))
+        lines = [
+            f"Дисциплина: {found_discipline.title}",
+            f"Код:        {found_discipline.code}",
+            f"Кафедра:    {dept_name}",
+        ]
+        if not students_data:
+            lines.append("Нет студентов, изучающих дисциплину.")
+        else:
+            total_grades = sum(grade for _, grade in students_data)
+            avg = total_grades / len(students_data)
+            lines.append(f"Средний балл: {avg:.2f}")
+            lines.append(f"Количество студентов: {len(students_data)}")
+            for name, grade in students_data:
+                lines.append(f"{name:<30} | {grade}")
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines))
+        return filename
 def start():
     f = Faculty("РФиКТ")
     pi = Department("Прикладная информатика")
@@ -184,6 +222,7 @@ def menu():
  8. Перевести в следующий семестр
  9. Инфо о студенте
 10. Ведомость по студенту
+11. Ведомость по дисциплине
  0. Выход""")
 def write(p): return input(p).strip()
 def main():
@@ -259,6 +298,10 @@ def main():
                 stud_id = write("ID студента: ")
                 filename = f.report_student(stud_id)
                 print(f"Ведомость успешно сохранена в файл: {filename}")
+            elif choice == "11":
+                code = write("Код дисциплины: ")
+                filename = f.report_discipline(code)
+                print(f"Ведомость по дисциплине сохранена в файл: {filename}")
             else:
                 print("Попробуйте снова.")
         except ValueError as e:
