@@ -4,6 +4,7 @@ def list_transform(list_b):
         if type(list_b[i]) is list:
             list_transform(list_b[i])
             list_b[i:i+1]=list_b[i]
+            i=+1
         else:
             i+=1
 list_a=[1,2,[1,2,[1,2,[0,1]]]]

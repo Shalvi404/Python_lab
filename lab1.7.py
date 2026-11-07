@@ -20,5 +20,3 @@ nalog=fin_cost*0.02
 print(f"Налог:{nalog:.2f} рублей")
 fin_cost+=nalog
 print(f"Финальная стоимость:{fin_cost:.2f} рублей")
-
-

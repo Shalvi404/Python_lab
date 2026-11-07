@@ -18,5 +18,3 @@ def add(a,b):
 add(23,13)
 with open("file.txt","r",encoding="utf-8") as file:
     print(file.read())
-
-

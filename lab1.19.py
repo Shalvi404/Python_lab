@@ -14,6 +14,3 @@ def multi(a):
     print(a)
 multi((1,2,3))
 multi((1,2,3))
-
-
-

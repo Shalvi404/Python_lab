@@ -4,8 +4,8 @@ today=input(f"Введите нынешний день(**.**.****):").split(".")
 if int(birthday[0])>31 or int(birthday[1])>12 or int(today[0])>31 or int(today[1])>12:
     print(f"Ошибка:неправильная дата")
 else:
-    vip = input(f"VIP?(yes/no):")
-    is_vip=vip.lower()=="yes"
+    vip = input(f"VIP?(да/нет):")
+    is_vip=vip.lower()=="да"
     age = int(today[2]) - int(birthday[2])
     discount = 0.0
     if age >= 63:
