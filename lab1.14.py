@@ -1,0 +1,8 @@
+text1=input(f"Введите 1 список чисел через пробел:").split()
+num1=set([float(n) for n in text1])
+text2=input(f"Введите 1 список чисел через пробел:").split()
+num2=set([float(n) for n in text2])
+print(f"Пересечение:{num1 & num2 }")
+print(f"Разность 1-2:{num1 - num2 }")
+print(f"Разность 2-1:{num2 - num1 }")
+print(f"Симметрическая разность:{num1 ^ num2 }")
